@@ -23,13 +23,13 @@ function outer() {
 */
   
 // Code Here
-
+let inner = outer();
 
 
 //Once you do that, invoke inner.
 
 //Code Here
-
+inner()
 
 
 ////////// PROBLEM 2 //////////
@@ -52,6 +52,8 @@ function callFriend(name) {
 */
 
 //Code Here
+let callJake = callFriend('Jake');
+callJake('435-555-9248')
 
 
 
@@ -62,15 +64,18 @@ function callFriend(name) {
 */
 
 //Code Here
-
+let makeCounter = () => {
+  let num = 0;
+  return () => ++num
+}
 
 
 //Uncomment this once you make your function
-//   var count = makeCounter();
-//   count(); // 1
-//   count(); // 2
-//   count(); // 3
-//   count(); // 4
+  var count = makeCounter();
+  count(); // 1
+  count(); // 2
+  count(); // 3
+  count(); // 4
 
 
 
@@ -78,8 +83,10 @@ function callFriend(name) {
 
 /*
   Inside the function called counterFactory return two functions that implement up/down counter.
-  The first function is called inc, this function is responsible for incrementing the value once and returning the updated value.
-  The second function is called dec, this function is responsible for decrementing the value by one and returning the updated value.
+  The first function is called inc, this function is responsible for incrementing the value once and 
+  returning the updated value.
+  The second function is called dec, this function is responsible for decrementing the value 
+  by one and returning the updated value.
   You will need to use the module pattern to achieve this.
   Information on the module pattern available here: 
   http://stackoverflow.com/questions/17776940/javascript-module-pattern-with-example?answertab=votes#tab-top
@@ -89,7 +96,14 @@ function counterFactory(value) {
   // Code here.
 
   return {
-
+    inc: function(){
+      value = value + 1
+      return value
+    },
+    dec: function(){
+      value = value - 1
+      return value
+    }
   };
 }
 
@@ -104,7 +118,8 @@ counter = counterFactory(10);
 ////////// PROBLEM 5 //////////
 
 /*
-  Inside the motivation function create another function called message that will return the welcome text with the firstname and lastname.
+  Inside the motivation function create another function called message that will return 
+  the welcome text with the firstname and lastname.
   The final message should say "You're doing awesome, keep it up firstname lastname." 
   (Hint: don't forget to have a space between the firstname and lastname and a period at the end of the sentence.)
 */
@@ -112,10 +127,12 @@ counter = counterFactory(10);
 function motivation( firstname, lastname ) {
   var welcomeText = "You're doing awesome, keep it up";
 
-  // code message function here.
+  return function message(){
+    return `${welcomeText} ${firstname} ${lastname}.`
+  }  // code message function here.
 
   //Uncommment this to return the value of your message function
-  //return message;
+  return message;
 }
 
 var greeting = motivation('Billy', 'Bob'); // 'You're doing awesome keep it up Billy Bob.
@@ -143,7 +160,9 @@ var module = (function() {
   // Anything that is being returned is made public and can be invoked from
   // outside our lexical scope
   return {
-    // Code here.
+    publicMethod: function(){
+    return privateMethod()
+    }  // Code here.
   };
 })();
 
@@ -162,7 +181,14 @@ function secretNumber() {
   var secret = 143;
 
   return {
-    // Code here
+  addToSecret: function(num){
+    secret += num;
+    return secret
+  },
+  takeAwayFromSecret: function(num){
+    secret -= num;
+    return secret
+  }  // Code here
   };
 }
 
@@ -180,7 +206,8 @@ function secretNumber() {
     4 seconds after call - log 4
     5 seconds after call - log 5
 
-  However, because each call to console.log occurs after the loop has finished, the value of i has changed before the console.log executes.
+  However, because each call to console.log occurs after the loop has finished, 
+  the value of i has changed before the console.log executes.
   We'll need to use a closure to preserve a reference to i at the time of execution.
   
   Fix the code below to log the desired output.
@@ -188,8 +215,9 @@ function secretNumber() {
 
 function timeOutCounter() {
   for (var i = 0; i <= 5; i++) {
+    let seconds = i;
     setTimeout(function() {
-      console.log(i);
+      console.log(seconds);
     }, i * 1000);
   }
 }
